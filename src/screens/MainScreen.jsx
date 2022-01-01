@@ -38,7 +38,7 @@ const MainScreen = () => {
                         tabBarIcon: ({ color, size }) => (
                             <Feather name="pie-chart" size={size} color={color} />
                         ),
-                        headerShown: true,
+                        headerShown: false,
                     }}
                 />
                 <Tab.Screen

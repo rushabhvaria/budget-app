@@ -2,10 +2,9 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Text, Button, VStack, HStack, Switch, useColorMode, Heading, ScrollView, Box, Image, Collapse, Pressable, FlatList, Divider } from "native-base";
 import {SafeAreaView} from "react-native";
 import { Feather, Ionicons, FontAwesome5 } from "@expo/vector-icons";
-
+import NetworthCard from "../components/NetworthCard";
 
 const HomeScreen = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
 
     const [userData, setUserData] = useState(
         {
@@ -16,7 +15,7 @@ const HomeScreen = () => {
             creditCards_total: "-9,340",
             loans_total: "-31,000",
             investments_total: "1,23,490",
-            property_total: "0",
+            property_total: "2,21,23,490",
             banks: [
                 {
                     id: 1,
@@ -34,18 +33,99 @@ const HomeScreen = () => {
                     lastUpdated: "30 mins ago",
                     logoURL: "https://www.nfcw.com/wp-content/uploads/2020/06/axis-bank-logo.jpg"
                 }
+            ],
+            creditCards: [
+                {
+                id: 1,
+                accountName: "SBI Pulse",
+                bankName: "State Bank Of India (...4406)",
+                balance: "-18,765",
+                lastUpdated: "10 mins ago",
+                logoURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/1200px-SBI-logo.svg.png"
+                },
+                {
+                id: 2,
+                accountName: "HDFC Regalia",
+                bankName: "HDFC Bank (...9010)",
+                balance: "-23,590",
+                lastUpdated: "10 mins ago",
+                logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                }
+            ],
+            loans: [
+                {
+                id: 1,
+                accountName: "Personal Loan",
+                bankName: "HDFC Bank (...2210)",
+                balance: "-2,30,000",
+                lastUpdated: "10 mins ago",
+                logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                },
+                {
+                id: 2,
+                accountName: "Home Loan",
+                bankName: "Kotak Mahindra Bank (...5732)",
+                balance: "-43,60,590",
+                lastUpdated: "10 mins ago",
+                logoURL: "https://static.smartspends.com/static/images/short_providers_logos/kotak_mahindra_mutual_fund.png"
+                },
+                {
+                id: 3,
+                accountName: "Motor Vehicle Loan",
+                bankName: "ICICI Bank (...3836)",
+                balance: "-6,48,920",
+                lastUpdated: "10 mins ago",
+                logoURL: "http://www.logotaglines.com/wp-content/uploads/2016/08/ICICI-Logo.png"
+                }
+            ],
+            investments: [
+                {
+                id: 1,
+                accountName: "Zerodha Investments",
+                bankName: "Zerodha Kite (...OMP236)",
+                balance: "12,23,889",
+                lastUpdated: "05 mins ago",
+                logoURL: "https://secureservercdn.net/160.153.137.210/0vy.d0c.myftpupload.com/wp-content/uploads/2020/09/Zerodha-1_1.png"
+                },
+                {
+                id: 2,
+                accountName: "Mutual Funds",
+                bankName: "Axis Mutual Fund (...1890)",
+                balance: "2,09,490",
+                lastUpdated: "05 mins ago",
+                logoURL: "https://www.nfcw.com/wp-content/uploads/2020/06/axis-bank-logo.jpg"
+                },
+                {
+                id: 3,
+                accountName: "Sovereign Gold Bond",
+                bankName: "HDFC Bank (...2651)",
+                balance: "1,10,238",
+                lastUpdated: "05 mins ago",
+                logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                }
+            ],
+            property: [
+                {
+                id: 1,
+                accountName: "Residential Property",
+                bankName: "Beau Monde Apt (...3101)",
+                balance: "98,28,000",
+                lastUpdated: "10 mins ago",
+                logoURL: ""
+                },
+                {
+                id: 2,
+                accountName: "Commercial Showroom",
+                bankName: "The Capital (...104)",
+                balance: "1,10,66,000",
+                lastUpdated: "10 mins ago",
+                logoURL: ""
+                }
             ]
-            // creditCards
-            // loans
-            // investments
-            // property
         }
     );
 
     const rupee = {symbol: '\u20B9'};
-
-    const [show, setShow] = React.useState(false);
-    const handleToggle = () => setShow(!show);
     
 
     return (
@@ -65,7 +145,8 @@ const HomeScreen = () => {
                 width="100%"
                 paddingX="5"
                 paddingTop="2"
-                paddingBottom="7">
+                paddingBottom="7"
+                marginBottom="-7">
             <VStack>
                 <HStack justifyContent="space-between" marginBottom="7">
                     <VStack flex="1" justifyContent="center">
@@ -107,115 +188,54 @@ const HomeScreen = () => {
                         />
                 </HStack>
             </VStack>
-
-                
-                
                 
             </Box>
             </HStack>
+            
+            <NetworthCard
+                category = "Banks"
+                currencySymbol = {rupee.symbol}
+                categoryTotal = {userData.banks_total}
+                categoryData = {userData.banks}
+            />
+            <NetworthCard
+                category = "Credit Cards"
+                currencySymbol = {rupee.symbol}
+                categoryTotal = {userData.creditCards_total}
+                categoryData = {userData.creditCards}
+            />
+            <NetworthCard
+                category = "Loans"
+                currencySymbol = {rupee.symbol}
+                categoryTotal = {userData.loans_total}
+                categoryData = {userData.loans}
+            />
+            <NetworthCard
+                category = "Investments"
+                currencySymbol = {rupee.symbol}
+                categoryTotal = {userData.investments_total}
+                categoryData = {userData.investments}
+            />
+            <NetworthCard
+                category = "Property"
+                currencySymbol = {rupee.symbol}
+                categoryTotal = {userData.property_total}
+                categoryData = {userData.property}
+            />
 
-            <HStack justifyContent="center" marginBottom="1" marginTop="-5">
-                <Pressable onPress={handleToggle} bgColor="white" width="85%" rounded="7" padding="3">
-                    <HStack justifyContent="space-between">
-                        <VStack justifyContent="center"><Text fontSize="xl" fontWeight="bold" color="indigo.600">Banks</Text></VStack>
-                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}{userData.banks_total}</Text></VStack>
-                    </HStack>
-                    
-                        <Collapse duration={700} isOpen={show}>
-                            <FlatList
-                            data={userData.banks}
-                            vertical
-                            showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => (
-                                // <HStack width="100%">
-                                //     <VStack justifyContent="center">
-                                //         <Image
-                                //             source={{
-                                //                 uri: item.logoURL,
-                                //             }}
-                                //             alt="bank logo"
-                                //             height={"25"}
-                                //             width={"25"}
-                                //             />
-                                //     </VStack>
-                                //     <VStack justifyContent="center" marginLeft="3">
-                                //         <HStack justifyContent="space-between">
-                                //             <VStack justifyContent="center"><Text>{item.accountName}</Text></VStack>
-                                //             <VStack justifyContent="center"><Text>{rupee.symbol}{item.balance}</Text></VStack>
-                                //         </HStack>
-                                //         <HStack justifyContent="space-between">
-                                //             <VStack justifyContent="center"><Text>{item.bankName}</Text></VStack>
-                                //             <VStack justifyContent="center"><Text>{item.lastUpdated}</Text></VStack>
-                                //         </HStack>
-                                //         <Divider marginY={3} />
-                                //     </VStack>
-                                // </HStack>
-                                <Fragment>
-                                <HStack justifyContent="flex-start">
-                                    <VStack justifyContent="center" flex="1">
-                                        <Image
-                                        source={{
-                                            uri: item.logoURL,
-                                        }}
-                                        alt="bank logo"
-                                        height={"25"}
-                                        width={"25"}
-                                        />
-                                    </VStack>
-                                    <VStack flex="8">
-                                        <HStack justifyContent="space-between">
-                                            <VStack justifyContent="center"><Text fontSize="md" color="indigo.900">{item.accountName}</Text></VStack>
-                                            <VStack justifyContent="center"><Text fontSize="md" color="indigo.900">{rupee.symbol}{item.balance}</Text></VStack>
-                                        </HStack>
-                                        <HStack justifyContent="space-between">
-                                            <VStack justifyContent="center"><Text fontSize="2xs" color="indigo.900" opacity={0.5}>{item.bankName}</Text></VStack>
-                                            <VStack justifyContent="center"><Text fontSize="2xs" color="indigo.900" opacity={0.5}>{item.lastUpdated}</Text></VStack>
-                                        </HStack>
-                                    </VStack>
-                                </HStack>
-                                <Divider marginY={3} />
-                                </Fragment>
-                            )}
-                            />
-                        </Collapse>
-                    
 
-                </Pressable>
-                
+            {/* Recent Transactions Section*/}
+            
+            <HStack
+                marginTop={7}
+                paddingX={5}>
+                <VStack>
+                    <Text fontSize="2xl" color="indigo.600" fontWeight="bold">Recent Transactions</Text>
+                    <Text fontSize="xs" color="indigo.800" opacity={0.5}>Your most recent transactions across all accounts</Text>
+                </VStack> 
             </HStack>
-            <HStack justifyContent="center" marginY="1">
-                <Box bgColor="white" width="85%" rounded="7" padding="3">
-                    <HStack justifyContent="space-between">
-                        <VStack justifyContent="center"><Text fontSize="xl" fontWeight="bold" color="indigo.600">Credit Cards</Text></VStack>
-                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}{userData.creditCards_total}</Text></VStack>
-                    </HStack>
-                </Box>
-            </HStack>
-            <HStack justifyContent="center" marginY="1">
-                <Box bgColor="white" width="85%" rounded="7" padding="3">
-                    <HStack justifyContent="space-between">
-                        <VStack justifyContent="center"><Text fontSize="xl" fontWeight="bold" color="indigo.600">Investments</Text></VStack>
-                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}{userData.investments_total}</Text></VStack>
-                    </HStack>
-                </Box>
-            </HStack>
-            <HStack justifyContent="center" marginY="1">
-                <Box bgColor="white" width="85%" rounded="7" padding="3">
-                    <HStack justifyContent="space-between">
-                        <VStack justifyContent="center"><Text fontSize="xl" fontWeight="bold" color="indigo.600">Loans</Text></VStack>
-                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}{userData.loans_total}</Text></VStack>
-                    </HStack>
-                </Box>
-            </HStack>
-            <HStack justifyContent="center" marginY="1">
-                <Box bgColor="white" width="85%" rounded="7" padding="3">
-                    <HStack justifyContent="space-between">
-                        <VStack justifyContent="center"><Text fontSize="xl" fontWeight="bold" color="indigo.600">Property</Text></VStack>
-                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}{userData.property_total}</Text></VStack>
-                    </HStack>
-                </Box>
-            </HStack>
+            
+            
             </VStack>
         </ScrollView>
         </SafeAreaView>
