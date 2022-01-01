@@ -21,12 +21,13 @@ const MainScreen = () => {
                 <Tab.Screen
                     name="Home"
                     component={HomeScreen}
+                    
                     options={{
                         tabBarLabel: "Home",
                         tabBarIcon: ({ color, size }) => (
                             <Feather name="home" size={size} color={color} />
                         ),
-                        headerShown: true,
+                        headerShown: false,
                     }}
                 />
                 <Tab.Screen

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { extendTheme, NativeBaseProvider } from "native-base";
+import { extendTheme, themeTools, NativeBaseProvider } from "native-base";
 import MainScreen from "./src/screens/MainScreen";
 import store from "./src/redux/store";
 import { Provider } from "react-redux";
@@ -14,12 +14,27 @@ const config = {
     initialColorMode: "light",
 };
 
+const components = {
+    Heading: {
+      // Can pass also function, giving you access theming tools
+      baseStyle: ({ colorMode }) => {
+        return {
+          color: colorMode === 'dark' ? 'red.300' : 'blue.300',
+          fontWeight: 'normal',
+        };
+      },
+    },
+  }
+
 // extend the theme
-export const theme = extendTheme({ config });
+export const theme = extendTheme({ 
+    components: components,
+    config: config 
+});
 
 function App() {
     return (
-        <NativeBaseProvider>
+        <NativeBaseProvider theme={theme}>
             <Provider store={store}>
                 <MainScreen />
             </Provider>
@@ -28,3 +43,14 @@ function App() {
 }
 
 export default App
+
+
+// Testing Dark mode
+{/* <Button colorScheme="indigo">Home Screen</Button>
+            <Heading>Dark Mode</Heading>
+            <Switch
+                    size="lg"
+                    colorScheme="blue"
+                    onToggle={toggleColorMode}
+                    isChecked={colorMode === "dark"}
+                /> */}
