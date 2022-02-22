@@ -129,118 +129,364 @@ const HomeScreen = () => {
     
 
     return (
-        <Fragment>
-        <SafeAreaView style={{ flex:0, backgroundColor: '#6366f1' }}>
-        <ScrollView
+      <Fragment>
+        <SafeAreaView style={{ flex: 0, backgroundColor: "#6366f1" }}>
+          <ScrollView
             vertical
             showsVerticalScrollIndicator={false}
             bgColor="gray.100"
             nestedScrollEnabled={true}
             height="100%"
-        >
+          >
             <VStack>
-            <HStack>
-            <Box
-                bgColor="indigo.500"
-                width="100%"
-                paddingX="5"
-                paddingTop="2"
-                paddingBottom="7"
-                marginBottom="-7">
-            <VStack>
-                <HStack justifyContent="space-between" marginBottom="7">
-                    <VStack flex="1" justifyContent="center">
-                        <Text fontSize="3xl" color="white" fontWeight="bold">Si Ae</Text>
-                    </VStack>
-                    <VStack marginX="2" justifyContent="center">
+              <HStack>
+                <Box
+                  bgColor="indigo.500"
+                  width="100%"
+                  paddingX="5"
+                  paddingTop="2"
+                  paddingBottom="7"
+                  marginBottom="-7"
+                >
+                  <VStack>
+                    <HStack justifyContent="space-between" marginBottom="7">
+                      <VStack flex="1" justifyContent="center">
+                        <Text fontSize="3xl" color="white" fontWeight="bold">
+                          Si Ae
+                        </Text>
+                      </VStack>
+                      <VStack marginX="2" justifyContent="center">
                         <Feather name="plus" size={30} color={"white"} />
-                    </VStack>
-                    <VStack marginX="2" justifyContent="center">
+                      </VStack>
+                      <VStack marginX="2" justifyContent="center">
                         <Feather name="settings" size={24} color={"white"} />
-                    </VStack>
-                </HStack>
+                      </VStack>
+                    </HStack>
 
-                <HStack>
-                    <Text fontSize="md" color="white">Total Networth</Text>
-                </HStack>
+                    <HStack>
+                      <Text fontSize="md" color="white">
+                        Total Networth
+                      </Text>
+                    </HStack>
 
-                <HStack>
-                    <VStack justifyContent="center">
-                        <Text fontSize="4xl" color="white">{'\u20B9'} {userData.totalNetworth}</Text>
-                    </VStack>
-                    <VStack justifyContent="center" marginX="3">
-                        <FontAwesome5 name="long-arrow-alt-right" size={24} color={"#38bdf8"} />
-                    </VStack>
-                </HStack>
+                    <HStack>
+                      <VStack justifyContent="center">
+                        <Text fontSize="4xl" color="white">
+                          {"\u20B9"} {userData.totalNetworth}
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center" marginX="3">
+                        <FontAwesome5
+                          name="long-arrow-alt-right"
+                          size={24}
+                          color={"#38bdf8"}
+                        />
+                      </VStack>
+                    </HStack>
 
-                <HStack>
-                    <Text fontSize="2xs" color="white" opacity="0.5">Updated {userData.lastUpdated}</Text>
-                </HStack>
+                    <HStack>
+                      <Text fontSize="2xs" color="white" opacity="0.5">
+                        Updated {userData.lastUpdated}
+                      </Text>
+                    </HStack>
 
-                <HStack justifyContent="center">
-                    <Image
+                    <HStack justifyContent="center">
+                      <Image
                         source={{
-                            uri: "https://i.imgur.com/Y0ZLQXu.png",
+                          uri: "https://i.imgur.com/Y0ZLQXu.png",
                         }}
                         alt="Alternate Text"
                         height={"150"}
                         width={"100%"}
-                        />
-                </HStack>
-            </VStack>
-                
-            </Box>
-            </HStack>
-            
-            <NetworthCard
-                category = "Banks"
-                currencySymbol = {rupee.symbol}
-                categoryTotal = {userData.banks_total}
-                categoryData = {userData.banks}
-            />
-            <NetworthCard
-                category = "Credit Cards"
-                currencySymbol = {rupee.symbol}
-                categoryTotal = {userData.creditCards_total}
-                categoryData = {userData.creditCards}
-            />
-            <NetworthCard
-                category = "Loans"
-                currencySymbol = {rupee.symbol}
-                categoryTotal = {userData.loans_total}
-                categoryData = {userData.loans}
-            />
-            <NetworthCard
-                category = "Investments"
-                currencySymbol = {rupee.symbol}
-                categoryTotal = {userData.investments_total}
-                categoryData = {userData.investments}
-            />
-            <NetworthCard
-                category = "Property"
-                currencySymbol = {rupee.symbol}
-                categoryTotal = {userData.property_total}
-                categoryData = {userData.property}
-            />
+                      />
+                    </HStack>
+                  </VStack>
+                </Box>
+              </HStack>
 
+              <NetworthCard
+                category="Banks"
+                currencySymbol={rupee.symbol}
+                categoryTotal={userData.banks_total}
+                categoryData={userData.banks}
+              />
+              <NetworthCard
+                category="Credit Cards"
+                currencySymbol={rupee.symbol}
+                categoryTotal={userData.creditCards_total}
+                categoryData={userData.creditCards}
+              />
+              <NetworthCard
+                category="Loans"
+                currencySymbol={rupee.symbol}
+                categoryTotal={userData.loans_total}
+                categoryData={userData.loans}
+              />
+              <NetworthCard
+                category="Investments"
+                currencySymbol={rupee.symbol}
+                categoryTotal={userData.investments_total}
+                categoryData={userData.investments}
+              />
+              <NetworthCard
+                category="Property"
+                currencySymbol={rupee.symbol}
+                categoryTotal={userData.property_total}
+                categoryData={userData.property}
+              />
 
-            {/* Recent Transactions Section*/}
-            
-            <HStack
-                marginTop={7}
-                paddingX={5}>
+              {/* Recent Transactions Section*/}
+
+              <HStack marginTop={7} paddingX={5}>
                 <VStack>
-                    <Text fontSize="2xl" color="indigo.600" fontWeight="bold">Recent Transactions</Text>
-                    <Text fontSize="xs" color="indigo.800" opacity={0.5}>Your most recent transactions across all accounts</Text>
-                </VStack> 
-            </HStack>
-            
-            
-            </VStack>
-        </ScrollView>
-        </SafeAreaView>
-        </Fragment>
+                  <Text fontSize="2xl" color="indigo.600" fontWeight="bold">
+                    Recent Transactions
+                  </Text>
+                  <Text fontSize="xs" color="indigo.800" opacity={0.5}>
+                    Your most recent transactions across all accounts
+                  </Text>
+                </VStack>
+              </HStack>
+              <HStack justifyContent="center" marginBottom="1" marginTop="5">
+                <Box
+                  bgColor="white"
+                  width="85%"
+                  rounded="7"
+                  padding="3"
+                  paddingBottom="8"
+                >
+                  <VStack>
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          Apple Store
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          Shopping
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}4,500
+                        </Text>
+                      </VStack>
+                    </HStack>
+                    <Divider marginY={3} />
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          Foodhall
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          Food
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}1,200
+                        </Text>
+                      </VStack>
+                    </HStack>
+                    <Divider marginY={3} />
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          Reebok
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          Shopping
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}2,999
+                        </Text>
+                      </VStack>
+                    </HStack>
+                    <Divider marginY={3} />
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          Swiggy
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          Food
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}1,500
+                        </Text>
+                      </VStack>
+                    </HStack>
+                    <Divider marginY={3} />
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          Beirut
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          Food
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}2,660
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </VStack>
+                </Box>
+              </HStack>
+              {/* <FontAwesome5
+                name="angle-double-down"
+                size={48}
+                color={"indigo.600"}
+              /> */}
 
+                {/* Recent Transactions Section*/}
+              <HStack marginTop={7} paddingX={5}>
+                <VStack>
+                  <Text fontSize="2xl" color="indigo.600" fontWeight="bold">
+                    Payment Reminders
+                  </Text>
+                  <Text fontSize="xs" color="indigo.800" opacity={0.5}>
+                    Your monthly payment reminders
+                  </Text>
+                </VStack>
+              </HStack>
+              <HStack justifyContent="center" marginBottom="1" marginTop="5">
+                <Box
+                  bgColor="white"
+                  width="85%"
+                  rounded="7"
+                  padding="3"
+                  paddingBottom="8"
+                >
+                  <VStack>
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="red.500"
+                        >
+                          Credit card
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          05/11/2021
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="red.500"
+                        >
+                          {rupee.symbol}3,500
+                        </Text>
+                      </VStack>
+                    </HStack>
+                    <Divider marginY={3} />
+                    <HStack justifyContent="space-between" paddingBottom="0">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          Phone Bill
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          07/11/2021
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}400
+                        </Text>
+                      </VStack>
+                    </HStack>
+                    <Divider marginY={3} />
+                    <HStack justifyContent="space-between" paddingBottom="2">
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.600"
+                        >
+                          House EMI
+                        </Text>
+                        <Text color="indigo.900" opacity="0.5">
+                          13/11/2021
+                        </Text>
+                      </VStack>
+                      <VStack justifyContent="center">
+                        <Text
+                          fontSize="md"
+                          fontWeight="bold"
+                          color="indigo.900"
+                        >
+                          {rupee.symbol}45,000
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </VStack>
+                </Box>
+              </HStack>
+              {/* <FontAwesome5
+                name="angle-double-down"
+                size={48}
+                color={"indigo.600"}
+              /> */}
+            </VStack>
+          </ScrollView>
+        </SafeAreaView>
+      </Fragment>
     );
 };
 
