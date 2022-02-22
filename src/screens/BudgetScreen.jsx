@@ -1,45 +1,43 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Text, Button, VStack, HStack, Switch, useColorMode, Heading, ScrollView, Box, Image, Collapse, Pressable, FlatList, Divider, Progress, Center, NativeBaseProvider } from "native-base";
-import {SafeAreaView, Dimensions} from "react-native";
+import {  Button, VStack, HStack, Switch, useColorMode, Heading, ScrollView, Box, Image, Collapse, Pressable, Text, View, FlatList, Divider, Progress, Center, NativeBaseProvider } from "native-base";
+import {SafeAreaView, Dimensions, StyleSheet} from "react-native";
 import { Feather, Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { ResponsivePie } from '@nivo/pie'
-
+import { PieChart, BarChart } from 'react-native-svg-charts';
 const BudgetScreen = () => {
     const rupee = {symbol: '\u20B9'};
     const data = [
         {
-          "id": "java",
-          "label": "java",
-          "value": 93,
-          "color": "hsl(227, 70%, 50%)"
+            key: 1,
+            value: 50,
+            svg: { fill: '#6366f1' },
+            arc: { outerRadius: '130%', cornerRadius: 10,  }
         },
         {
-          "id": "php",
-          "label": "php",
-          "value": 265,
-          "color": "hsl(340, 70%, 50%)"
+            key: 2,
+            value: 50,
+            svg: { fill: '#857eef' }
         },
         {
-          "id": "make",
-          "label": "make",
-          "value": 150,
-          "color": "hsl(275, 70%, 50%)"
+            key: 3,
+            value: 40,
+            svg: { fill: '#a096ec' }
         },
         {
-          "id": "stylus",
-          "label": "stylus",
-          "value": 7,
-          "color": "hsl(346, 70%, 50%)"
+            key: 4,
+            value: 95,
+            svg: { fill: '#b8afea' }
         },
         {
-          "id": "hack",
-          "label": "hack",
-          "value": 109,
-          "color": "hsl(226, 70%, 50%)"
+            key: 5,
+            value: 35,
+            svg: { fill: '#cec8e6' }
         }
-      ]
+    ]
+
     
     const screenWidth = Dimensions.get("window").width;
+    const data_bar = [{value:10000, svg:{fill: '#6366f1'}},{value: 6755, svg:{fill: '#b8afea'}}]
+
     return (
         <Fragment>
             <SafeAreaView style={{ flex:0, backgroundColor: '#6366f1' }}>
@@ -92,123 +90,69 @@ const BudgetScreen = () => {
                         <Heading fontSize="xl" fontWeight="bold" paddingBottom="6" justifyContent={"flex-start"} color="indigo.900">
                             December Spending
                         </Heading>
-        <ResponsivePie
-            data={data}
-            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-            innerRadius={0.5}
-            padAngle={0.7}
-            cornerRadius={3}
-            activeOuterRadiusOffset={8}
-            colors={{ scheme: 'purples' }}
-            borderWidth={1}
-            borderColor={{ from: 'color', modifiers: [ [ 'darker', '0.2' ] ] }}
-            arcLinkLabelsSkipAngle={10}
-            arcLinkLabelsTextColor="#333333"
-            arcLinkLabelsThickness={2}
-            arcLinkLabelsColor={{ from: 'color' }}
-            arcLabelsSkipAngle={10}
-            arcLabelsTextColor={{ from: 'color', modifiers: [ [ 'darker', '1' ] ] }}
-            defs={[
-                {
-                    id: 'dots',
-                    type: 'patternDots',
-                    background: 'inherit',
-                    color: 'rgba(255, 255, 255, 0.3)',
-                    size: 4,
-                    padding: 1,
-                    stagger: true
-                },
-                {
-                    id: 'lines',
-                    type: 'patternLines',
-                    background: 'inherit',
-                    color: 'rgba(255, 255, 255, 0.3)',
-                    rotation: -45,
-                    lineWidth: 6,
-                    spacing: 10
-                }
-            ]}
-            fill={[
-                {
-                    match: {
-                        id: 'ruby'
-                    },
-                    id: 'dots'
-                },
-                {
-                    match: {
-                        id: 'c'
-                    },
-                    id: 'dots'
-                },
-                {
-                    match: {
-                        id: 'go'
-                    },
-                    id: 'dots'
-                },
-                {
-                    match: {
-                        id: 'python'
-                    },
-                    id: 'dots'
-                },
-                {
-                    match: {
-                        id: 'scala'
-                    },
-                    id: 'lines'
-                },
-                {
-                    match: {
-                        id: 'lisp'
-                    },
-                    id: 'lines'
-                },
-                {
-                    match: {
-                        id: 'elixir'
-                    },
-                    id: 'lines'
-                },
-                {
-                    match: {
-                        id: 'javascript'
-                    },
-                    id: 'lines'
-                }
-            ]}
-            legends={[
-                {
-                    anchor: 'bottom',
-                    direction: 'row',
-                    justify: false,
-                    translateX: 0,
-                    translateY: 56,
-                    itemsSpacing: 0,
-                    itemWidth: 100,
-                    itemHeight: 18,
-                    itemTextColor: '#999',
-                    itemDirection: 'left-to-right',
-                    itemOpacity: 1,
-                    symbolSize: 18,
-                    symbolShape: 'circle',
-                    effects: [
-                        {
-                            on: 'hover',
-                            style: {
-                                itemTextColor: '#000'
-                            }
-                        }
-                    ]
-                }
-            ]}
-        />
+                        <PieChart
+                style={{ height: 200 }}
+                outerRadius={'70%'}
+                innerRadius={10}
+                data={data}
+            ></PieChart>
                     </Box>
                     
                 
             </HStack>
+            <HStack justifyContent="center" marginBottom="1" marginTop="5">
+                    <Box bgColor="white" width="85%" rounded="7" padding="3" paddingBottom="8">
+                        <Heading fontSize="xl" fontWeight="bold" paddingBottom="6" justifyContent={"flex-start"} color="indigo.900">
+                            Monthly Budget Breakdown
+                        </Heading>
+
+                        <VStack>
+                        <HStack justifyContent="space-between" paddingBottom="2">
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">Groceries</Text></VStack>
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}200 <Text color="indigo.900" opacity={0.5}>of {rupee.symbol}700</Text></Text></VStack>
+                        </HStack>
+                        <Divider marginY={3} />
+                        <HStack justifyContent="space-between" paddingBottom="2">
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">Medicines</Text></VStack>
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}290 <Text color="indigo.900" opacity={0.5}>of {rupee.symbol}400</Text></Text></VStack>
+                        </HStack>
+                        <Divider marginY={3} />
+                        <HStack justifyContent="space-between" paddingBottom="2">
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="red.500">Food & Delivery</Text></VStack>
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="red.500">{rupee.symbol}900 <Text color="indigo.900" opacity={0.5}>of {rupee.symbol}700</Text></Text></VStack>
+                        </HStack>
+                        <Divider marginY={3} />
+                        <HStack justifyContent="space-between" paddingBottom="2">
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">Electricity</Text></VStack>
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}789 <Text color="indigo.900" opacity={0.5}>of {rupee.symbol}800</Text></Text></VStack>
+                        </HStack>
+                        <Divider marginY={3} />
+                        <HStack justifyContent="space-between" paddingBottom="2">
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">Telephone & Internet</Text></VStack>
+                                            <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{rupee.symbol}450 <Text color="indigo.900" opacity={0.5}>of {rupee.symbol}500</Text></Text></VStack>
+                        </HStack>
+                        </VStack>
+                    </Box>
+                    
                 
+            </HStack>
+            <HStack justifyContent="center" marginBottom="1" marginTop="5">
+                    <Box bgColor="white" width="85%" rounded="7" padding="3" paddingBottom="8">
+                        <Heading fontSize="xl" fontWeight="bold" paddingBottom="6" justifyContent={"flex-start"} color="indigo.900">
+                            December Cash Flow
+                        </Heading>
+                        <BarChart
+                style={{ height: 200 }}
+                data={data_bar}
+                gridMin={0}
+                svg={{ fill: 'rgba(134, 65, 244, 0.8)' }}
+                yAccessor={({ item }) => item.value}
+                contentInset={{ top: 20, bottom: 20 }}
+            ></BarChart>
+                    </Box>
+                    
+                
+            </HStack>
 
 
             </VStack>
@@ -217,5 +161,6 @@ const BudgetScreen = () => {
         </Fragment>
     );
 };
+
 
 export default BudgetScreen;
