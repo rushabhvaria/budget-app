@@ -1,9 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Text, Button, VStack, HStack, Switch, useColorMode, Heading, ScrollView, Box, Image, Collapse, Pressable, FlatList, Divider } from "native-base";
+import React, { Fragment, useState, useEffect, Component } from "react";
+import { Text, Button, VStack, HStack, Switch, useColorMode, Heading, ScrollView, Box, Image,View, Collapse, Pressable, FlatList, Divider } from "native-base";
 import {SafeAreaView} from "react-native";
 import { Feather, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import NetworthCard from "../components/NetworthCard";
-
+import TransactionCard from "../components/TransactionCard";
+import ReminderCard from "../components/ReminderCard";
+import InteractiveChart from "../components/LineChart";
+import {LineChart,Path, Grid } from "react-native-svg-charts";
 const HomeScreen = () => {
 
     const [userData, setUserData] = useState(
@@ -11,17 +14,17 @@ const HomeScreen = () => {
             id: 1,
             totalNetworth: "2,16,171",
             lastUpdated: "4 mins ago",
-            banks_total: "1,33,021",
-            creditCards_total: "-9,340",
-            loans_total: "-31,000",
-            investments_total: "1,23,490",
-            property_total: "2,21,23,490",
+            banks_total: 133021,
+            creditCards_total: -9340,
+            loans_total: -31000,
+            investments_total: 123490,
+            property_total: 22123490,
             banks: [
                 {
                     id: 1,
                     accountName: "HDFC Savings Acc",
                     bankName: "HDFC Bank (...3902)",
-                    balance: "83,102",
+                    balance: 83102,
                     lastUpdated: "40 mins ago",
                     logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
                 },
@@ -29,7 +32,7 @@ const HomeScreen = () => {
                     id: 2,
                     accountName: "Axis Priority Acc",
                     bankName: "Axis Bank (...8027)",
-                    balance: "53,885",
+                    balance: 53885,
                     lastUpdated: "30 mins ago",
                     logoURL: "https://www.nfcw.com/wp-content/uploads/2020/06/axis-bank-logo.jpg"
                 }
@@ -39,7 +42,7 @@ const HomeScreen = () => {
                 id: 1,
                 accountName: "SBI Pulse",
                 bankName: "State Bank Of India (...4406)",
-                balance: "-18,765",
+                balance: -18765,
                 lastUpdated: "10 mins ago",
                 logoURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/SBI-logo.svg/1200px-SBI-logo.svg.png"
                 },
@@ -47,7 +50,7 @@ const HomeScreen = () => {
                 id: 2,
                 accountName: "HDFC Regalia",
                 bankName: "HDFC Bank (...9010)",
-                balance: "-23,590",
+                balance: -23590,
                 lastUpdated: "10 mins ago",
                 logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
                 }
@@ -57,7 +60,7 @@ const HomeScreen = () => {
                 id: 1,
                 accountName: "Personal Loan",
                 bankName: "HDFC Bank (...2210)",
-                balance: "-2,30,000",
+                balance: -230000,
                 lastUpdated: "10 mins ago",
                 logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
                 },
@@ -65,7 +68,7 @@ const HomeScreen = () => {
                 id: 2,
                 accountName: "Home Loan",
                 bankName: "Kotak Mahindra Bank (...5732)",
-                balance: "-43,60,590",
+                balance: -4360590,
                 lastUpdated: "10 mins ago",
                 logoURL: "https://static.smartspends.com/static/images/short_providers_logos/kotak_mahindra_mutual_fund.png"
                 },
@@ -73,7 +76,7 @@ const HomeScreen = () => {
                 id: 3,
                 accountName: "Motor Vehicle Loan",
                 bankName: "ICICI Bank (...3836)",
-                balance: "-6,48,920",
+                balance: -648920,
                 lastUpdated: "10 mins ago",
                 logoURL: "http://www.logotaglines.com/wp-content/uploads/2016/08/ICICI-Logo.png"
                 }
@@ -83,7 +86,7 @@ const HomeScreen = () => {
                 id: 1,
                 accountName: "Zerodha Investments",
                 bankName: "Zerodha Kite (...OMP236)",
-                balance: "12,23,889",
+                balance: 1223889,
                 lastUpdated: "05 mins ago",
                 logoURL: "https://secureservercdn.net/160.153.137.210/0vy.d0c.myftpupload.com/wp-content/uploads/2020/09/Zerodha-1_1.png"
                 },
@@ -91,7 +94,7 @@ const HomeScreen = () => {
                 id: 2,
                 accountName: "Mutual Funds",
                 bankName: "Axis Mutual Fund (...1890)",
-                balance: "2,09,490",
+                balance: 209490,
                 lastUpdated: "05 mins ago",
                 logoURL: "https://www.nfcw.com/wp-content/uploads/2020/06/axis-bank-logo.jpg"
                 },
@@ -99,7 +102,7 @@ const HomeScreen = () => {
                 id: 3,
                 accountName: "Sovereign Gold Bond",
                 bankName: "HDFC Bank (...2651)",
-                balance: "1,10,238",
+                balance: 110238,
                 lastUpdated: "05 mins ago",
                 logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
                 }
@@ -109,7 +112,7 @@ const HomeScreen = () => {
                 id: 1,
                 accountName: "Residential Property",
                 bankName: "Beau Monde Apt (...3101)",
-                balance: "98,28,000",
+                balance: 9828000,
                 lastUpdated: "10 mins ago",
                 logoURL: ""
                 },
@@ -117,16 +120,127 @@ const HomeScreen = () => {
                 id: 2,
                 accountName: "Commercial Showroom",
                 bankName: "The Capital (...104)",
-                balance: "1,10,66,000",
+                balance: 11066000,
                 lastUpdated: "10 mins ago",
                 logoURL: ""
                 }
-            ]
+            ],
+            transactions: [
+                {
+                    id: 1,
+                    accountName: "Apple Store",
+                    transactionCategory: "Shopping",
+                    balance: 4500,
+                    lastUpdated: "10 mins ago",
+                    // logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                },
+                {
+                    id: 2,
+                    accountName: "Foodhall",
+                    transactionCategory: "Food",
+                    balance: 1200,
+                    lastUpdated: "40 mins ago",
+                    // logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                },
+                {
+                    id: 3,
+                    accountName: "Reebok",
+                    transactionCategory: "Shopping",
+                    balance: 2999,
+                    lastUpdated: "1 hour ago",
+                    // logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                },
+                {
+                    id: 4,
+                    accountName: "Swiggy",
+                    transactionCategory: "Food",
+                    balance: 1500,
+                    lastUpdated: "1.5 hour ago",
+                    // logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                },
+                {
+                    id: 5,
+                    accountName: "Beirut",
+                    transactionCategory: "Food",
+                    balance: 2660,
+                    lastUpdated: "2 hour ago",
+                    // logoURL: "https://static.wikia.nocookie.net/logopedia/images/6/61/HDFC.png"
+                }
+            ],
+            reminders: [
+                {
+                    id: 1,
+                    accountName: "Credit Card",
+                    dueDate: "05/11/2021",
+                    balance: 3500,
+                    pastDue: true,
+                },
+                {
+                    id: 2,
+                    accountName: "Phone Bill",
+                    dueDate: "07/11/2021",
+                    balance: 460,
+                    pastDue: false,
+                },
+                {
+                    id: 3,
+                    accountName: "House EMI",
+                    dueDate: "13/11/2021",
+                    balance: 45000,
+                    pastDue: false,
+                    
+                },
+            ],
+            piedata: [
+            {
+              name:'Food',
+              value:700,
+              color:'#6366f1'
+            },
+            {
+              name:'Entertainment',
+              value:500,
+              color:'#8b83f5'
+            },
+            {
+              name:'Travel',
+              value:600,
+              color:'#aca0f8'
+            },
+            {
+              name:'Shopping',
+              value:500,
+              color:'#c9bffb'
+            },
+            {
+              name:'Groceries',
+              value:400,
+              color:'#e5dffd'
+            },
+          ],
         }
     );
 
     const rupee = {symbol: '\u20B9'};
-    
+    const data1 = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
+    const data2 = [ -87, 66, -69, 92, -40, -61, 16, 62, 20, -93, -54, 47, -89, -44, 18 ]
+
+    const data = [
+        {
+            data: data1,
+            svg: { stroke: '#3a243b' },
+        },
+        {
+            data: data2,
+            svg: { stroke: '#705d72' },
+        },
+    ]
+    // const convertToINR = (cover) => {
+    //     return cover.toLocaleString('en-IN', {
+    //         style: 'currency',
+    //         currency: 'INR',
+    //     })}
+
 
     return (
       <Fragment>
@@ -172,7 +286,7 @@ const HomeScreen = () => {
                     <HStack>
                       <VStack justifyContent="center">
                         <Text fontSize="4xl" color="white">
-                          {"\u20B9"} {userData.totalNetworth}
+                          {userData.totalNetworth}
                         </Text>
                       </VStack>
                       <VStack justifyContent="center" marginX="3">
@@ -191,14 +305,9 @@ const HomeScreen = () => {
                     </HStack>
 
                     <HStack justifyContent="center">
-                      <Image
-                        source={{
-                          uri: "https://i.imgur.com/Y0ZLQXu.png",
-                        }}
-                        alt="Alternate Text"
-                        height={"150"}
-                        width={"100%"}
-                      />
+                    <ScrollView>
+                    <InteractiveChart></InteractiveChart>
+                      </ScrollView>
                     </HStack>
                   </VStack>
                 </Box>
@@ -255,126 +364,31 @@ const HomeScreen = () => {
                   padding="3"
                   paddingBottom="8"
                 >
-                  <VStack>
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          Apple Store
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          Shopping
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}4,500
-                        </Text>
-                      </VStack>
-                    </HStack>
+                <VStack>
+                    <TransactionCard
+                      currencySymbol={rupee.symbol}
+                      transactionData={userData.transactions[0]}
+                    />
                     <Divider marginY={3} />
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          Foodhall
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          Food
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}1,200
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <TransactionCard
+                      currencySymbol={rupee.symbol}
+                      transactionData={userData.transactions[1]}
+                    />
                     <Divider marginY={3} />
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          Reebok
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          Shopping
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}2,999
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <TransactionCard
+                      currencySymbol={rupee.symbol}
+                      transactionData={userData.transactions[2]}
+                    />
                     <Divider marginY={3} />
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          Swiggy
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          Food
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}1,500
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <TransactionCard
+                      currencySymbol={rupee.symbol}
+                      transactionData={userData.transactions[3]}
+                    />
                     <Divider marginY={3} />
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          Beirut
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          Food
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}2,660
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <TransactionCard
+                      currencySymbol={rupee.symbol}
+                      transactionData={userData.transactions[4]}
+                    />
                   </VStack>
                 </Box>
               </HStack>
@@ -404,77 +418,20 @@ const HomeScreen = () => {
                   paddingBottom="8"
                 >
                   <VStack>
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="red.500"
-                        >
-                          Credit card
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          05/11/2021
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="red.500"
-                        >
-                          {rupee.symbol}3,500
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <ReminderCard
+                      currencySymbol={rupee.symbol}
+                      reminderData={userData.reminders[0]}
+                    />
                     <Divider marginY={3} />
-                    <HStack justifyContent="space-between" paddingBottom="0">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          Phone Bill
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          07/11/2021
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}400
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <ReminderCard
+                      currencySymbol={rupee.symbol}
+                      reminderData={userData.reminders[1]}
+                    />
                     <Divider marginY={3} />
-                    <HStack justifyContent="space-between" paddingBottom="2">
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.600"
-                        >
-                          House EMI
-                        </Text>
-                        <Text color="indigo.900" opacity="0.5">
-                          13/11/2021
-                        </Text>
-                      </VStack>
-                      <VStack justifyContent="center">
-                        <Text
-                          fontSize="md"
-                          fontWeight="bold"
-                          color="indigo.900"
-                        >
-                          {rupee.symbol}45,000
-                        </Text>
-                      </VStack>
-                    </HStack>
+                    <ReminderCard
+                      currencySymbol={rupee.symbol}
+                      reminderData={userData.reminders[2]}
+                    />
                   </VStack>
                 </Box>
               </HStack>

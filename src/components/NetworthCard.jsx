@@ -2,6 +2,11 @@ import { Text, VStack, HStack, Image, Collapse, Pressable, FlatList, Divider } f
 import React, { Fragment, useState} from "react";
 
 const NetworthCard = (props) => {
+    const convertToINR = (cover) => {
+        return cover.toLocaleString('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+        })}
     const {
         category,
         currencySymbol,
@@ -17,7 +22,7 @@ const NetworthCard = (props) => {
                 <Pressable onPress={handleToggle} bgColor="white" width="85%" rounded="7" padding="3">
                     <HStack justifyContent="space-between">
                         <VStack justifyContent="center"><Text fontSize="xl" fontWeight="bold" color="indigo.600">{category}</Text></VStack>
-                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{currencySymbol}{categoryTotal}</Text></VStack>
+                        <VStack justifyContent="center"><Text fontSize="md" fontWeight="bold" color="indigo.900">{convertToINR(categoryTotal)}</Text></VStack>
                     </HStack>
                     
                         <Collapse duration={400} isOpen={show} startingHeight={4.5}>
@@ -43,7 +48,7 @@ const NetworthCard = (props) => {
                                     <VStack flex="8">
                                         <HStack justifyContent="space-between">
                                             <VStack justifyContent="center"><Text fontSize="md" color="indigo.900">{item.accountName}</Text></VStack>
-                                            <VStack justifyContent="center"><Text fontSize="md" color="indigo.900">{currencySymbol}{item.balance}</Text></VStack>
+                                            <VStack justifyContent="center"><Text fontSize="md" color="indigo.900">{convertToINR(item.balance)}</Text></VStack>
                                         </HStack>
                                         <HStack justifyContent="space-between">
                                             <VStack justifyContent="center"><Text fontSize="2xs" color="indigo.900" opacity={0.5}>{item.bankName}</Text></VStack>

@@ -1,82 +1,54 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, Component } from "react";
 import {  Button, VStack, HStack, Switch, useColorMode, Heading, ScrollView, Box, Image, Collapse, Pressable, Text, View, FlatList, Divider, Progress, Center, NativeBaseProvider } from "native-base";
 import {SafeAreaView, Dimensions, StyleSheet} from "react-native";
 import { Feather, Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { PieChart, BarChart } from "react-native-svg-charts";
+import {BarChart } from "react-native-svg-charts";
 import { Text as SvgText} from "react-native-svg";
+import PieChart from "../components/PieChart";
 const BudgetScreen = () => {
+  const convertToINR = (cover) => {
+        return cover.toLocaleString('en-IN', {
+            maximumFractionDigits: 0,
+            style: 'currency',
+            currency: 'INR',
+        })}
+
+        const BudgetStatement = (monthly_budget, monthly_spent) => { 
+          const budget_string = ""
+            if(monthly_budget<monthly_spent){
+                const budget_difference = convertToINR((userData.monthly_budget - userData.monthly_spent)*-1)
+                return  <Text>You're <Text fontWeight="bold">{budget_difference}</Text> over budget. Try better!</Text> 
+              } else{
+                const budget_difference = convertToINR((userData.monthly_budget - userData.monthly_spent))
+                return  <Text>You're <Text fontWeight="bold">{budget_difference}</Text> under budget. Great going!</Text> 
+              }}
+
+
+  const [userData, setUserData] = useState(
+    {
+            id: 1,
+            totalNetworth: "2,16,171",
+            lastUpdated: "4 mins ago",
+            banks_total: "1,33,021",
+            creditCards_total: "-9,340",
+            loans_total: "-31,000",
+            investments_total: "1,23,490",
+            property_total: "2,21,23,490",
+            monthly_spent: 7234,
+            monthly_budget: 10000
+    })
     const rupee = {symbol: '\u20B9'};
-    const data1 = [
-      {
-        key: 1,
-        amount: 50,
-        svg: { fill: "#6366f1" },
-      },
-      {
-        key: 2,
-        amount: 50,
-        svg: { fill: "#857eef" },
-      },
-      {
-        key: 3,
-        amount: 40,
-        svg: { fill: "#a096ec" },
-      },
-      {
-        key: 4,
-        amount: 95,
-        svg: { fill: "#b8afea" },
-      },
-      {
-        key: 5,
-        amount: 35,
-        svg: { fill: "#cec8e6" },
-      },
-    ];
+    const month = new Date().getMonth();
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const monthly_spent = convertToINR(userData.monthly_spent)
 
-    
-    
+  const monthly_budget = convertToINR(userData.monthly_budget)
+ 
+
     const screenWidth = Dimensions.get("window").width;
-    const data_bar = [{value:10000, svg:{fill: '#6366f1'}},{value: 6755, svg:{fill: '#b8afea'}}]
+    const budget_statement = BudgetStatement(userData.monthly_budget, userData.monthly_spent)
     const data2 = [10000,6775];
-
     const CUT_OFF = 20;
-    const BarLabels = ({ x, y, bandwidth, data }) =>
-      data.map((value, index) => (
-        <SvgText
-          key={index}
-          x={x(index) + bandwidth / 2}
-          y={value < CUT_OFF ? y(value) - 10 : y(value) + 15}
-          fontSize={8}
-          fill={value >= CUT_OFF ? "white" : "black"}
-          alignmentBaseline={"middle"}
-          textAnchor={"middle"}
-        >
-          {value}
-        </SvgText>
-      ));
-
-       const Labels = ({ slices, height, width }) => {
-         return slices.map((slice, index) => {
-           const { labelCentroid, pieCentroid, data } = slice;
-           return (
-             <SvgText
-               key={index}
-               x={pieCentroid[0]}
-               y={pieCentroid[1]}
-               fill={"white"}
-               textAnchor={"middle"}
-               alignmentBaseline={"middle"}
-               fontSize={24}
-               stroke={"black"}
-               strokeWidth={0.2}
-             >
-               {data.amount}
-             </SvgText>
-           );
-         });
-       };
-
     return (
       <Fragment>
         <SafeAreaView style={{ flex: 0, backgroundColor: "#6366f1" }}>
@@ -128,21 +100,20 @@ const BudgetScreen = () => {
                     justifyContent={"flex-start"}
                     color="indigo.900"
                   >
-                    December Budget
+                    {months[month]} Budget
                   </Heading>
                   <Text color="indigo.900" fontWeight="bold" fontSize="md">
-                    {rupee.symbol}7,234 <Text opacity="0.5">spent of</Text>{" "}
-                    {rupee.symbol}10,000
+                  {monthly_spent} <Text opacity="0.5">spent of</Text>{" "}
+                    {monthly_budget}
                   </Text>
                   <Progress
                     colorScheme="indigo"
                     rounded="7"
                     size="2xl"
-                    value={45}
+                    value={(userData.monthly_spent/userData.monthly_budget)*100}
                   />
                   <Text color="indigo.900" opacity="0.5">
-                    You're <Text fontWeight="bold">{rupee.symbol}2,757</Text>{" "}
-                    under budget. Great going!
+                    {budget_statement}
                   </Text>
                 </Box>
               </HStack>
@@ -162,18 +133,9 @@ const BudgetScreen = () => {
                     justifyContent={"flex-start"}
                     color="indigo.900"
                   >
-                    December Spending
+                    {months[month]} Spending
                   </Heading>
-                  <PieChart
-                    style={{ height: 200 }}
-                    valueAccessor={({ item }) => item.amount}
-                    data={data1}
-                    spacing={0}
-                    outerRadius={"100%"}
-                    innerRadius = {"60%"}
-
-                  >
-                    <Labels />
+                  <PieChart>
                   </PieChart>
                 </Box>
               </HStack>
@@ -313,7 +275,7 @@ const BudgetScreen = () => {
   <HStack justifyContent="center" marginBottom="1" marginTop="5">
                     <Box bgColor="white" width="85%" rounded="7" padding="3" paddingBottom="8">
                         <Heading fontSize="xl" fontWeight="bold" paddingBottom="3" justifyContent={"flex-start"} color="indigo.900">
-                            December Cash Flow
+                        {months[month]} Cash Flow
                         </Heading>
                         <VStack>
                             <Text fontSize="2xl" fontWeight="bold" paddingBottom="3">+ {rupee.symbol}3,225</Text>
